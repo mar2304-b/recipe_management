@@ -1,0 +1,44 @@
+services:
+  db:
+    build: 
+      context: ./mysql
+      dockerfile: Dockerfile
+    container_name: database_recipe_management
+    restart: always
+    ports:
+      - 3307:3306
+    volumes:
+      - ./mysql/volumes:/var/lib/mysql
+    hostname: recipe_database
+    networks:
+      - net_recipe_database
+    healthcheck:
+      test: ["CMD", "mysql", "-u", "root", "-proot"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+  adminer:
+    image: adminer
+    container_name: adminer_recipe
+    restart: always
+    ports:
+      - 8080:8080
+    networks:
+      - net_recipe_database
+  fastapi:
+    build: 
+      context: ./fastapi
+      dockerfile: Dockerfile
+    container_name: fastapi_database
+    restart: always
+    ports:
+      - 8000:8000
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - net_recipe_database 
+networks:
+  net_recipe_database: 
+    driver: bridge
+    name: net_recipe_database

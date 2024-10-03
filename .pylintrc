@@ -1,0 +1,3 @@
+[MESSAGE CONTROL]
+
+diseble=too-few-public-methods,no-self-arguments, import-error,no-member
