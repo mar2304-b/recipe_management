@@ -1,6 +1,6 @@
 from pydantic import BaseModel
 
-class FamilyModel(BaseModel):
+class Family(BaseModel):
     """
     Modelo de familia.
 

@@ -1,6 +1,6 @@
 from pydantic import BaseModel
 
-class RecipeModel(BaseModel):
+class Recipe(BaseModel):
     """
     Modelo de receta.
 

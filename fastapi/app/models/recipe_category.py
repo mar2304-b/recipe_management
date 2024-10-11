@@ -1,6 +1,6 @@
 from pydantic import BaseModel
 
-class RecipeCategoryModel(BaseModel):
+class RecipeCategory(BaseModel):
     """
     Modelo de categoría de receta.
 

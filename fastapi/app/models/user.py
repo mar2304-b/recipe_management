@@ -1,6 +1,6 @@
 from pydantic import BaseModel
 
-class UserModel(BaseModel):
+class User(BaseModel):
     """
     Modelo de usuario para la aplicación.
 

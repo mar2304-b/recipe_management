@@ -18,7 +18,7 @@ class UserRole(Base):
     __tablename__ = "user_roles"
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String(100), unique=True, nullable=False)
-    role = Column(String(100), unique=True, nullable=False)
+    permissions = Column(String(255), nullable=False)
 
 class userFamilies(Base):
     """
@@ -59,6 +59,11 @@ class User(Base):
     account_type = Column(Integer, nullable=False)
     profile_picture = Column(String(100), nullable=True)
     role_id = Column(Integer, ForeignKey('user_roles.id'), nullable=False)
+    
+class IngredientCategory(Base):
+    __tablename__ = "ingredients_categories"
+    id = Column(Integer, primary_key=True, index=True)
+    name = Column(String(80), unique=True, nullable=False)
 
 # Configuración de la base de datos
 DATABASE_URL = f"mysql+pymysql://{DATABASE['user']}:{DATABASE['password']}@{DATABASE['host']}/{DATABASE['name']}"

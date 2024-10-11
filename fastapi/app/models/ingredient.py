@@ -1,7 +1,7 @@
 from datetime import date
 from pydantic import BaseModel
 
-class IngredientModel(BaseModel):
+class Ingredient(BaseModel):
     """
     Modelo de ingrediente.
 

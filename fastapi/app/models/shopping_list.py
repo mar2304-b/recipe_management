@@ -1,7 +1,7 @@
 from datetime import datetime
 from pydantic import BaseModel 
 
-class ShoppingListModel(BaseModel):
+class ShoppingList(BaseModel):
     """
     Modelo de lista de compras.
 

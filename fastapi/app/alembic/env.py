@@ -3,16 +3,19 @@ from sqlalchemy import engine_from_config
 from sqlalchemy import pool
 from alembic import context
 
+from migrations import Base, DATABASE_URL
+
 # Configuración de Alembic.
 # Accede a los valores del archivo .ini en uso.
 config = context.config
+config.set_main_option("sqlalchemy.url", DATABASE_URL)
 
 # Configura los loggers según el archivo de configuración.
 if config.config_file_name is not None:
     fileConfig(config.config_file_name)
 
 # MetaData del modelo para soporte de 'autogenerate'.
-target_metadata = None
+target_metadata = Base.metadata 
 
 def run_migrations_offline() -> None:
     """Ejecuta migraciones en modo 'offline'.

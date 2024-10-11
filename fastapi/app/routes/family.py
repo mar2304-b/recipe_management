@@ -1,4 +1,4 @@
-from models.family import FamilyModel
+from models.family import Family
 from services.family import (
     get_all_families,
     get_family_by_id,
@@ -34,7 +34,7 @@ def get_family(family_id: int):
     return get_family_by_id(family_id)
 
 @family_router.post("/")
-def register_family(family: FamilyModel):
+def register_family(family: Family):
     """
     Registra una nueva familia.
 
@@ -47,7 +47,7 @@ def register_family(family: FamilyModel):
     return create_family(family)
 
 @family_router.put("/{id}")
-def update_family_data(family_id: int, family: FamilyModel):
+def update_family_data(family_id: int, family: Family):
     """
     Actualiza los datos de una familia existente.
 

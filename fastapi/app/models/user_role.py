@@ -1,6 +1,6 @@
 from pydantic import BaseModel  
 
-class UserRoleModel(BaseModel):
+class UserRole(BaseModel):
     """
     Modelo de roles de usuario.
 

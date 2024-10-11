@@ -1,4 +1,4 @@
-from models.user import UserModel
+from models.user import User
 from services.user import (
     get_all_users,
     get_user_by_id,
@@ -34,7 +34,7 @@ def get_user(user_id: int):
     return get_user_by_id(user_id)
 
 @user_router.post("/")
-def register_user(user: UserModel):
+def register_user(user: User):
     """
     Registra un nuevo usuario.
 
@@ -47,7 +47,7 @@ def register_user(user: UserModel):
     return create_user(user)
 
 @user_router.put("/{id}")
-def update_user_data(user_id: int, user: UserModel):
+def update_user_data(user_id: int, user: User):
     """
     Actualiza los datos de un usuario existente.
 

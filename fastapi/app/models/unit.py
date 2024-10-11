@@ -1,6 +1,6 @@
 from pydantic import BaseModel
 
-class UnitModel(BaseModel):
+class Unit(BaseModel):
     """
     Modelo de unidad.
 

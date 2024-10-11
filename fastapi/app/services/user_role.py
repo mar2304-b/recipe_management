@@ -1,9 +1,9 @@
 from config.database import UserRoleModel  # Importa el modelo de rol de usuario
-from models.user_role import UserRole  # Importa la clase UserRole
+from models.user_role  import UserRole  # Importa la clase UserRole
 
 def get_all_user_roles():
     """Obtiene todos los roles de usuario de la base de datos."""
-    user_roles = UserRoleModel.select().dicts()  # Selecciona todos los roles como diccionarios
+    user_roles = UserRole.select().dicts()  # Selecciona todos los roles como diccionarios
     return list(user_roles)  # Retorna la lista de roles de usuario
 
 def get_user_role_by_id(user_role_id: int):
@@ -16,9 +16,9 @@ def get_user_role_by_id(user_role_id: int):
         UserRoleModel: El rol de usuario encontrado o un mensaje de error si no existe.
     """
     try:
-        user_role = UserRoleModel.get(UserRoleModel.id == user_role_id)  # Busca el rol por ID
+        user_role = UserRole.get(UserRole.id == user_role_id)  # Busca el rol por ID
         return user_role  # Retorna el rol encontrado
-    except UserRoleModel.DoesNotExist:  # Captura si el rol no existe
+    except UserRole.DoesNotExist:  # Captura si el rol no existe
         return {"error": "User role not found"}  # Retorna un mensaje de error
 
 def create_user_role(user_role: UserRole):
@@ -49,11 +49,11 @@ def update_user_role(user_role_id: int, user_role: UserRole):
     updated_rows = (
         UserRoleModel.update(
             {
-                UserRoleModel.name: user_role.name,
-                UserRoleModel.permissions: user_role.permissions,
+                UserRole.name: user_role.name,
+                UserRole.permissions: user_role.permissions,
             }
         )
-        .where(UserRoleModel.id == user_role_id)  # Filtra por ID
+        .where(UserRole.id == user_role_id)  # Filtra por ID
         .execute()  # Ejecuta la actualización
     )
 
@@ -71,8 +71,8 @@ def delete_user_role(user_role_id: int):
         dict: Mensaje de éxito o error.
     """
     try:
-        user_role = UserRoleModel.get(UserRoleModel.id == user_role_id)  # Busca el rol por ID
+        user_role = UserRoleModel.get(UserRole.id == user_role_id)  # Busca el rol por ID
         user_role.delete_instance()  # Elimina el rol encontrado
-    except UserRoleModel.DoesNotExist:  # Captura si el rol no existe
+    except UserRole.DoesNotExist:  # Captura si el rol no existe
         return {"error": "User role not found"}  # Retorna un mensaje de error
     return {"message": "User role deleted successfully"}  # Retorna un mensaje de éxito

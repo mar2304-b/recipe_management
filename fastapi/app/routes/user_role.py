@@ -1,4 +1,4 @@
-from models.user_role import UserRoleModel
+from models.user_role import UserRole
 from services.user_role import (
     get_all_user_roles,
     get_user_role_by_id,
@@ -34,7 +34,7 @@ def get_user_role(user_role_id: int):
     return get_user_role_by_id(user_role_id)
 
 @user_role_router.post("/")
-def register_user_role(user_role: UserRoleModel):
+def register_user_role(user_role: UserRole):
     """
     Registra un nuevo rol de usuario.
 
@@ -47,7 +47,7 @@ def register_user_role(user_role: UserRoleModel):
     return create_user_role(user_role)
 
 @user_role_router.put("/{id}")
-def update_user_role_data(user_role_id: int, user_role: UserRoleModel):
+def update_user_role_data(user_role_id: int, user_role: UserRole):
     """
     Actualiza los datos de un rol de usuario existente.
 

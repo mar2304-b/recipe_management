@@ -1,7 +1,7 @@
 from datetime import date, datetime
 from pydantic import BaseModel
 
-class MenuModel(BaseModel):
+class Menu(BaseModel):
     """
     Modelo de menú.
 

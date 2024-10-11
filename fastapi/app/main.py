@@ -2,6 +2,9 @@ from fastapi import FastAPI
 from fastapi.responses import RedirectResponse
 from contextlib import asynccontextmanager
 from config.database import database as connection
+from routes.user_role import user_role_router
+from routes.family import family_router
+from routes.user import user_router
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -38,3 +41,7 @@ def read_root():
         RedirectResponse: Respuesta de redirección a la URL de documentación.
     """
     return RedirectResponse(url="/docs")
+
+app.include_router(user_router, prefix="/api/users", tags=["users"])
+app.include_router(user_role_router, prefix="/api/user_roles", tags=["user_roles"])
+app.include_router(family_router, prefix="/api/families", tags=["families"])
