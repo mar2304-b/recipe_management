@@ -13,62 +13,63 @@ user_router = APIRouter()
 @user_router.get("/")
 def get_users():
     """
-    Obtiene todos los usuarios.
+    Retrieve all users.
 
     Returns:
-        list: Lista de usuarios.
+        list: A list of all users.
     """
     return get_all_users()
 
-@user_router.get("/{id}")
+@user_router.get("/{user_id}")
 def get_user(user_id: int):
     """
-    Obtiene un usuario específico por su ID.
+    Retrieve a specific user by their ID.
 
     Args:
-        user_id (int): ID del usuario a obtener.
+        user_id (int): The ID of the user to retrieve.
 
     Returns:
-        UserModel or dict: El usuario si se encuentra, o un diccionario de error.
+        User or dict: The user if found, or an error dictionary.
     """
     return get_user_by_id(user_id)
 
 @user_router.post("/")
 def register_user(user: User):
     """
-    Registra un nuevo usuario.
+    Register a new user.
 
     Args:
-        user (UserModel): Objeto de usuario con los detalles a crear.
+        user (User): User object containing details for the new user.
 
     Returns:
-        UserModel: El usuario creado.
+        User: The created user object.
     """
     return create_user(user)
 
-@user_router.put("/{id}")
+@user_router.put("/{user_id}")
 def update_user_data(user_id: int, user: User):
     """
-    Actualiza los datos de un usuario existente.
+    Update the data of an existing user.
 
     Args:
-        user_id (int): ID del usuario a actualizar.
-        user (UserModel): Objeto de usuario con los nuevos detalles.
+        user_id (int): The ID of the user to update.
+        user (User): User object containing updated details.
 
     Returns:
-        dict: Mensaje de éxito o error.
+        dict: A message indicating success or error.
     """
     return update_user(user_id, user)
 
-@user_router.delete("/{id}")
+@user_router.delete("/{user_id}")
 def remove_user(user_id: int):
     """
-    Elimina un usuario de la base de datos.
+    Delete a user from the database.
 
     Args:
-        user_id (int): ID del usuario a eliminar.
+        user_id (int): The ID of the user to delete.
 
     Returns:
-        dict: Mensaje de éxito o error.
+        dict: A message indicating success or error.
     """
     return delete_user(user_id)
+

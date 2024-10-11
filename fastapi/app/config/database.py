@@ -1,126 +1,126 @@
 from peewee import *
 from config.settings import DATABASE
 
-# Imprime la configuración de la base de datos.
+# Print the database configuration for debugging purposes.
 print(DATABASE)
 
-# Configuración de la base de datos MySQL.
+# MySQL database configuration.
 database = MySQLDatabase(
-    DATABASE["name"],       # Nombre de la base de datos
-    user=DATABASE["user"],  # Usuario de la base de datos
-    password=DATABASE["password"],  # Contraseña del usuario
-    host=DATABASE["host"],  # Host de la base de datos
-    port=DATABASE["port"],  # Puerto de conexión
+    DATABASE["name"],       # Database name
+    user=DATABASE["user"],  # Database user
+    password=DATABASE["password"],  # User password
+    host=DATABASE["host"],  # Database host
+    port=DATABASE["port"],  # Connection port
 )
 
 class UserModel(Model):
-    """Modelo de usuario."""
-    id = AutoField(primary_key=True)  # ID autogenerado
-    username = CharField(max_length=50)  # Nombre de usuario
-    age = IntegerField()  # Edad del usuario
-    weigth = FloatField()  # Peso del usuario
-    diabetic = BooleanField(default=False)  # Indica si el usuario es diabético
-    email = CharField(max_length=50)  # Correo electrónico
-    password = CharField(max_length=50)  # Contraseña
-    account_type = CharField(max_length=50)  # Tipo de cuenta
-    profile_picture = CharField()  # Ruta de la imagen de perfil
-    role_id = IntegerField()  # ID del rol
+    """Represents a user in the system."""
+    id = AutoField(primary_key=True)  # Auto-generated ID
+    username = CharField(max_length=50)  # Username
+    age = IntegerField()  # User's age
+    weight = FloatField()  # User's weight (corrected spelling)
+    diabetic = BooleanField(default=False)  # Indicates if the user is diabetic
+    email = CharField(max_length=50)  # User's email address
+    password = CharField(max_length=50)  # User's password
+    account_type = CharField(max_length=50)  # User's account type
+    profile_picture = CharField(null=True)  # Profile picture URL (nullable)
+    role_id = IntegerField()  # Role ID
 
     class Meta:
-        database = database  # Asocia el modelo a la base de datos
-        table_name = "users"  # Nombre de la tabla
+        database = database  # Associate model with the database
+        table_name = "users"  # Database table name
 
 class UserRoleModel(Model):
-    """Modelo de rol de usuario."""
-    id = AutoField(primary_key=True)  # ID autogenerado
-    name = CharField(max_length=50)  # Nombre del rol
-    permission = CharField(max_length=50)  # Permisos del rol
+    """Represents a user role."""
+    id = AutoField(primary_key=True)  # Auto-generated ID
+    name = CharField(max_length=50)  # Role name
+    permissions = CharField(max_length=50)  # Role permissions
 
     class Meta:
         database = database
         table_name = "user_roles"
 
 class UnitModel(Model):
-    """Modelo de unidad de medida."""
-    id = AutoField(primary_key=True)  # ID autogenerado
-    name = CharField(max_length=50)  # Nombre de la unidad
+    """Represents a unit of measurement."""
+    id = AutoField(primary_key=True)  # Auto-generated ID
+    name = CharField(max_length=50)  # Unit name
 
     class Meta:
         database = database
         table_name = "units"
 
 class ShoppingListModel(Model):
-    """Modelo de lista de compras."""
-    id = AutoField(primary_key=True)  # ID autogenerado
-    user_id = CharField(max_length=50)  # ID del usuario
-    created_at = DateTimeField()  # Fecha y hora de creación
+    """Represents a shopping list."""
+    id = AutoField(primary_key=True)  # Auto-generated ID
+    user_id = CharField(max_length=50)  # User ID
+    created_at = DateTimeField()  # Creation date and time
 
     class Meta:
         database = database
         table_name = "shopping_lists"
 
 class RecipeModel(Model):
-    """Modelo de receta."""
-    id = AutoField(primary_key=True)  # ID autogenerado
-    user_id = IntegerField()  # ID del usuario
-    description = CharField(max_length=100)  # Descripción de la receta
-    instructions = CharField(max_length=100)  # Instrucciones
-    preparation_time = IntegerField()  # Tiempo de preparación
-    difficulty = CharField(max_length=100)  # Dificultad
-    is_public = BooleanField(default=False)  # Indica si la receta es pública
-    nutrional_table = CharField(max_length=100)  # Tabla nutricional
+    """Represents a recipe."""
+    id = AutoField(primary_key=True)  # Auto-generated ID
+    user_id = IntegerField()  # User ID
+    description = CharField(max_length=100)  # Recipe description
+    instructions = CharField(max_length=100)  # Preparation instructions
+    preparation_time = IntegerField()  # Preparation time in minutes
+    difficulty = CharField(max_length=100)  # Difficulty level
+    is_public = BooleanField(default=False)  # Indicates if the recipe is public
+    nutritional_table = CharField(max_length=100)  # Nutritional information
 
     class Meta:
         database = database
         table_name = "recipes"
 
 class RecipeCategoryModel(Model):
-    """Modelo de categoría de receta."""
-    id = AutoField(primary_key=True)  # ID autogenerado
-    name = CharField(max_length=50)  # Nombre de la categoría
+    """Represents a recipe category."""
+    id = AutoField(primary_key=True)  # Auto-generated ID
+    name = CharField(max_length=50)  # Category name
 
     class Meta:
         database = database
         table_name = "recipe_categories"
 
 class MenuModel(Model):
-    """Modelo de menú."""
-    id = AutoField(primary_key=True)  # ID autogenerado
-    user_id = IntegerField()  # ID del usuario
-    menu_date = DateField()  # Fecha del menú
-    meal_type = CharField(max_length=50)  # Tipo de comida
-    create_at = DateTimeField()  # Fecha y hora de creación
+    """Represents a menu."""
+    id = AutoField(primary_key=True)  # Auto-generated ID
+    user_id = IntegerField()  # User ID
+    menu_date = DateField()  # Menu date
+    meal_type = CharField(max_length=50)  # Meal type
+    created_at = DateTimeField()  # Creation date and time
 
     class Meta:
         database = database
         table_name = "menus"
 
 class IngredientModel(Model):
-    """Modelo de ingrediente."""
-    id = AutoField(primary_key=True)  # ID autogenerado
-    name = CharField(max_length=50)  # Nombre del ingrediente
-    unit_id = IntegerField()  # ID de la unidad de medida
-    expiration_date = DateField()  # Fecha de vencimiento
-    category_id = IntegerField()  # ID de la categoría
-    calories = IntegerField()  # Calorías
+    """Represents an ingredient."""
+    id = AutoField(primary_key=True)  # Auto-generated ID
+    name = CharField(max_length=50)  # Ingredient name
+    unit_id = IntegerField()  # Unit of measurement ID
+    expiration_date = DateField()  # Expiration date
+    category_id = IntegerField()  # Category ID
+    calories = IntegerField()  # Calories
 
     class Meta:
         database = database
         table_name = "ingredients"
 
 class IngredientCategoryModel(Model):
-    """Modelo de categoría de ingredientes."""
-    id = AutoField(primary_key=True)  # ID autogenerado
-    name = CharField(max_length=50)  # Nombre de la categoría
+    """Represents an ingredient category."""
+    id = AutoField(primary_key=True)  # Auto-generated ID
+    name = CharField(max_length=50)  # Category name
 
     class Meta:
         database = database
         table_name = "ingredient_category"
 
 class FamilyModel(Model):
-    """Modelo de familia."""
-    id = AutoField(primary_key=True)  # ID autogenerado
-    name = CharField(max_length=50)  # Nombre de la familia
+    """Represents a family."""
+    id = AutoField(primary_key=True)  # Auto-generated ID
+    name = CharField(max_length=50)  # Family name
 
     class Meta:
         database = database

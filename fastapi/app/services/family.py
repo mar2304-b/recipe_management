@@ -3,23 +3,23 @@ from models.family import Family
 
 def get_all_families():
     """
-    Obtiene todas las familias de la base de datos.
+    Retrieve all families from the database.
 
     Returns:
-        list: Lista de familias como diccionarios.
+        list: A list of families as dictionaries.
     """
     families = FamilyModel.select().dicts()
     return list(families)
 
 def get_family_by_id(family_id: int):
     """
-    Obtiene una familia específica por su ID.
+    Retrieve a specific family by its ID.
 
     Args:
-        family_id (int): ID de la familia a obtener.
+        family_id (int): The ID of the family to retrieve.
 
     Returns:
-        Family or dict: La familia si se encuentra, o un diccionario de error.
+        Family or dict: The family if found, or an error dictionary.
     """
     try:
         family = FamilyModel.get(FamilyModel.id == family_id)
@@ -29,29 +29,29 @@ def get_family_by_id(family_id: int):
 
 def create_family(family: Family):
     """
-    Crea una nueva familia en la base de datos.
+    Create a new family in the database.
 
     Args:
-        family (Family): Objeto de familia con los detalles a crear.
+        family (Family): Family object containing details to create.
 
     Returns:
-        Family: La familia creada.
+        Family: The created family object.
     """
-    FamilyModel.create(
+    family_instance = FamilyModel.create(
         name=family.name,
     )
-    return family
+    return family_instance
 
 def update_family(family_id: int, family: Family):
     """
-    Actualiza una familia existente.
+    Update an existing family.
 
     Args:
-        family_id (int): ID de la familia a actualizar.
-        family (Family): Objeto de familia con los nuevos detalles.
+        family_id (int): The ID of the family to update.
+        family (Family): Family object containing updated details.
 
     Returns:
-        dict: Mensaje de éxito o error.
+        dict: A message indicating success or error.
     """
     updated_rows = (
         FamilyModel.update(
@@ -69,13 +69,13 @@ def update_family(family_id: int, family: Family):
 
 def delete_family(family_id: int):
     """
-    Elimina una familia de la base de datos.
+    Delete a family from the database.
 
     Args:
-        family_id (int): ID de la familia a eliminar.
+        family_id (int): The ID of the family to delete.
 
     Returns:
-        dict: Mensaje de éxito o error.
+        dict: A message indicating success or error.
     """
     try:
         family = FamilyModel.get(FamilyModel.id == family_id)

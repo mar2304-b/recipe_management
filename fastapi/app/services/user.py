@@ -1,39 +1,43 @@
-from config.database import UserModel  # Importa el modelo de usuario
-from models.user import User  # Importa la clase User
+from config.database import UserModel  # Import the user model
+from models.user import User  # Import the User class
 
 def get_all_users():
-    """Obtiene todos los usuarios de la base de datos."""
-    users = UserModel.select().dicts()  # Selecciona todos los usuarios como diccionarios
-    return list(users)  # Retorna la lista de usuarios
+    """Retrieve all users from the database.
+
+    Returns:
+        list: A list of users as dictionaries.
+    """
+    users = UserModel.select().dicts()  # Select all users as dictionaries
+    return list(users)  # Return the list of users
 
 def get_user_by_id(user_id: int):
-    """Obtiene un usuario por su ID.
+    """Retrieve a user by their ID.
 
     Args:
-        user_id (int): El ID del usuario a buscar.
+        user_id (int): The ID of the user to find.
 
     Returns:
-        UserModel: El usuario encontrado o un mensaje de error si no existe.
+        UserModel or dict: The found user or an error message if not found.
     """
     try:
-        user = UserModel.get(UserModel.id == user_id)  # Busca el usuario por ID
-        return user  # Retorna el usuario encontrado
-    except UserModel.DoesNotExist:  # Captura si el usuario no existe
-        return {"error": "User not found"}  # Retorna un mensaje de error
+        user = UserModel.get(UserModel.id == user_id)  # Find the user by ID
+        return user  # Return the found user
+    except UserModel.DoesNotExist:  # Handle case where the user does not exist
+        return {"error": "User not found"}  # Return an error message
 
 def create_user(user: User):
-    """Crea un nuevo usuario en la base de datos.
+    """Create a new user in the database.
 
     Args:
-        user (User): El objeto usuario con la información del nuevo usuario.
+        user (User): The user object with the new user information.
 
     Returns:
-        User: El usuario creado.
+        User: The created user.
     """
     UserModel.create(
         username=user.username,
         age=user.age,
-        weigth=user.weigth,
+        weight=user.weight,  # Fixed typo: "weigth" to "weight"
         diabetic=user.diabetic,
         email=user.email,
         password=user.password,
@@ -41,24 +45,24 @@ def create_user(user: User):
         profile_picture=user.profile_picture,
         role_id=user.role_id,
     )
-    return user  # Retorna el usuario creado
+    return user  # Return the created user
 
 def update_user(user_id: int, user: User):
-    """Actualiza un usuario existente.
+    """Update an existing user.
 
     Args:
-        user_id (int): El ID del usuario a actualizar.
-        user (User): El objeto usuario con la nueva información.
+        user_id (int): The ID of the user to update.
+        user (User): The user object with updated information.
 
     Returns:
-        dict: Mensaje de éxito o error.
+        dict: A message indicating success or error.
     """
     updated_rows = (
         UserModel.update(
             {
                 UserModel.username: user.username,
                 UserModel.age: user.age,
-                UserModel.weigth: user.weigth,
+                UserModel.weight: user.weight,  # Fixed typo here as well
                 UserModel.diabetic: user.diabetic,
                 UserModel.email: user.email,
                 UserModel.password: user.password,
@@ -67,26 +71,26 @@ def update_user(user_id: int, user: User):
                 UserModel.role_id: user.role_id,
             }
         )
-        .where(UserModel.id == user_id)  # Filtra por ID
-        .execute()  # Ejecuta la actualización
+        .where(UserModel.id == user_id)  # Filter by ID
+        .execute()  # Execute the update
     )
 
-    if updated_rows == 0:  # Verifica si se actualizó algún registro
-        return {"error": "User not found"}  # Retorna un mensaje de error
-    return {"message": "User updated successfully"}  # Retorna un mensaje de éxito
+    if updated_rows == 0:  # Check if any rows were updated
+        return {"error": "User not found"}  # Return an error message
+    return {"message": "User updated successfully"}  # Return a success message
 
 def delete_user(user_id: int):
-    """Elimina un usuario por su ID.
+    """Delete a user by their ID.
 
     Args:
-        user_id (int): El ID del usuario a eliminar.
+        user_id (int): The ID of the user to delete.
 
     Returns:
-        dict: Mensaje de éxito o error.
+        dict: A message indicating success or error.
     """
     try:
-        user = UserModel.get(UserModel.id == user_id)  # Busca el usuario por ID
-        user.delete_instance()  # Elimina el usuario encontrado
-    except UserModel.DoesNotExist:  # Captura si el usuario no existe
-        return {"error": "User not found"}  # Retorna un mensaje de error
-    return {"message": "User deleted successfully"}  # Retorna un mensaje de éxito
+        user = UserModel.get(UserModel.id == user_id)  # Find the user by ID
+        user.delete_instance()  # Delete the found user
+    except UserModel.DoesNotExist:  # Handle case where the user does not exist
+        return {"error": "User not found"}  # Return an error message
+    return {"message": "User deleted successfully"}  # Return a success message

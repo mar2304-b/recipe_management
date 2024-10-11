@@ -1,32 +1,32 @@
-from fastapi import FastAPI
+from fastapi import Depends, FastAPI
 from fastapi.responses import RedirectResponse
 from contextlib import asynccontextmanager
 from config.database import database as connection
 from routes.user_role import user_role_router
 from routes.family import family_router
 from routes.user import user_router
+from helpers.apy_key_auth import get_api_key
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    """
-    Maneja la conexión a la base de datos durante el ciclo de vida de la aplicación.
+    """Manage database connection during the application's lifespan.
 
     Args:
-        app (FastAPI): La instancia de la aplicación FastAPI.
+        app (FastAPI): The FastAPI application instance.
 
     Yields:
-        None: Ejecuta la aplicación.
+        None: Runs the application.
 
     Finally:
-        Cierra la conexión a la base de datos cuando se detiene la aplicación.
+        Closes the database connection when the application stops.
     """
     # Connect to DB if the connection is closed
     if connection.is_closed():
         connection.connect()
     try:
-        yield  # run the app
+        yield  # Run the application
     finally:
-        # Close the connection when the app is stopped
+        # Close the connection when the application is stopped
         if not connection.is_closed():
             connection.close()
 
@@ -34,14 +34,14 @@ app = FastAPI(lifespan=lifespan)
 
 @app.get("/")
 def read_root():
-    """
-    Redirige a la documentación de la API.
+    """Redirect to the API documentation.
 
     Returns:
-        RedirectResponse: Respuesta de redirección a la URL de documentación.
+        RedirectResponse: Redirect response to the documentation URL.
     """
     return RedirectResponse(url="/docs")
 
-app.include_router(user_router, prefix="/api/users", tags=["users"])
-app.include_router(user_role_router, prefix="/api/user_roles", tags=["user_roles"])
-app.include_router(family_router, prefix="/api/families", tags=["families"])
+# Include routers for different API endpoints
+app.include_router(user_router, prefix="/api/users", tags=["users"], dependencies= [Depends(get_api_key)])
+app.include_router(user_role_router, prefix="/api/user_roles", tags=["user_roles"], dependencies= [Depends(get_api_key)])
+app.include_router(family_router, prefix="/api/families", tags=["families"], dependencies= [Depends(get_api_key)])

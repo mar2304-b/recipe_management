@@ -3,19 +3,20 @@ from pydantic import BaseModel
 
 class Ingredient(BaseModel):
     """
-    Modelo de ingrediente.
+    Represents an ingredient.
 
-    Atributos:
-        id (int, opcional): Identificador único del ingrediente. Por defecto, None.
-        name (str): Nombre del ingrediente.
-        unit_id (int): Identificador de la unidad de medida.
-        expiration_date (date): Fecha de vencimiento del ingrediente.
-        category_id (int): Identificador de la categoría del ingrediente.
-        calories (int): Cantidad de calorías por porción del ingrediente.
+    Attributes:
+        id (Optional[int]): A unique identifier for the ingredient. Defaults to None.
+        name (str): The name of the ingredient.
+        unit_id (int): The identifier for the unit of measurement.
+        expiration_date (date): The expiration date of the ingredient.
+        category_id (int): The identifier for the ingredient's category.
+        calories (int): The number of calories per serving of the ingredient.
     """
+
     id: int = None
     name: str
-    unit_id : int
-    expiration_date : date
-    category_id : int
+    unit_id: int
+    expiration_date: date
+    category_id: int
     calories: int

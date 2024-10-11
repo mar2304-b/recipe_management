@@ -1,50 +1,54 @@
-from config.database import ShoppingListModel  # Importa el modelo de lista de compras
-from models.shopping_list import ShoppingList  # Importa la clase ShoppingList
+from config.database import ShoppingListModel  # Import the shopping list model
+from models.shopping_list import ShoppingList  # Import the ShoppingList class
 
 def get_all_shopping_lists():
-    """Obtiene todas las listas de compras de la base de datos."""
-    shopping_lists = ShoppingListModel.select().dicts()  # Selecciona todas las listas de compras como diccionarios
-    return list(shopping_lists)  # Retorna la lista de listas de compras
+    """Retrieve all shopping lists from the database.
+
+    Returns:
+        list: A list of shopping lists as dictionaries.
+    """
+    shopping_lists = ShoppingListModel.select().dicts()  # Select all shopping lists as dictionaries
+    return list(shopping_lists)  # Return the list of shopping lists
 
 def get_shopping_list_by_id(shopping_list_id: int):
-    """Obtiene una lista de compras por su ID.
+    """Retrieve a shopping list by its ID.
 
     Args:
-        shopping_list_id (int): El ID de la lista de compras a buscar.
+        shopping_list_id (int): The ID of the shopping list to find.
 
     Returns:
-        ShoppingListModel: La lista de compras encontrada o un mensaje de error si no existe.
+        ShoppingListModel or dict: The found shopping list or an error message if not found.
     """
     try:
-        shopping_list = ShoppingListModel.get(ShoppingListModel.id == shopping_list_id)  # Busca la lista de compras por ID
-        return shopping_list  # Retorna la lista de compras encontrada
-    except ShoppingListModel.DoesNotExist:  # Captura si la lista de compras no existe
-        return {"error": "Shopping list not found"}  # Retorna un mensaje de error
+        shopping_list = ShoppingListModel.get(ShoppingListModel.id == shopping_list_id)  # Find shopping list by ID
+        return shopping_list  # Return the found shopping list
+    except ShoppingListModel.DoesNotExist:  # Handle case where the shopping list does not exist
+        return {"error": "Shopping list not found"}  # Return an error message
 
 def create_shopping_list(shopping_list: ShoppingList):
-    """Crea una nueva lista de compras en la base de datos.
+    """Create a new shopping list in the database.
 
     Args:
-        shopping_list (ShoppingList): El objeto lista de compras con la información de la nueva lista.
+        shopping_list (ShoppingList): The shopping list object with new list information.
 
     Returns:
-        ShoppingList: La lista de compras creada.
+        ShoppingList: The created shopping list.
     """
     ShoppingListModel.create(
         user_id=shopping_list.user_id,
         created_at=shopping_list.created_at,
     )
-    return shopping_list  # Retorna la lista de compras creada
+    return shopping_list  # Return the created shopping list
 
 def update_shopping_list(shopping_list_id: int, shopping_list: ShoppingList):
-    """Actualiza una lista de compras existente.
+    """Update an existing shopping list.
 
     Args:
-        shopping_list_id (int): El ID de la lista de compras a actualizar.
-        shopping_list (ShoppingList): El objeto lista de compras con la nueva información.
+        shopping_list_id (int): The ID of the shopping list to update.
+        shopping_list (ShoppingList): The shopping list object with updated information.
 
     Returns:
-        dict: Mensaje de éxito o error.
+        dict: A message indicating success or error.
     """
     updated_rows = (
         ShoppingListModel.update(
@@ -53,26 +57,27 @@ def update_shopping_list(shopping_list_id: int, shopping_list: ShoppingList):
                 ShoppingListModel.created_at: shopping_list.created_at,
             }
         )
-        .where(ShoppingListModel.id == shopping_list_id)  # Filtra por ID
-        .execute()  # Ejecuta la actualización
+        .where(ShoppingListModel.id == shopping_list_id)  # Filter by ID
+        .execute()  # Execute the update
     )
 
-    if updated_rows == 0:  # Verifica si se actualizó algún registro
-        return {"error": "Shopping list not found"}  # Retorna un mensaje de error
-    return {"message": "Shopping list updated successfully"}  # Retorna un mensaje de éxito
+    if updated_rows == 0:  # Check if any rows were updated
+        return {"error": "Shopping list not found"}  # Return an error message
+    return {"message": "Shopping list updated successfully"}  # Return a success message
 
 def delete_shopping_list(shopping_list_id: int):
-    """Elimina una lista de compras por su ID.
+    """Delete a shopping list by its ID.
 
     Args:
-        shopping_list_id (int): El ID de la lista de compras a eliminar.
+        shopping_list_id (int): The ID of the shopping list to delete.
 
     Returns:
-        dict: Mensaje de éxito o error.
+        dict: A message indicating success or error.
     """
     try:
-        shopping_list = ShoppingListModel.get(ShoppingListModel.id == shopping_list_id)  # Busca la lista de compras por ID
-        shopping_list.delete_instance()  # Elimina la lista de compras encontrada
-    except ShoppingListModel.DoesNotExist:  # Captura si la lista de compras no existe
-        return {"error": "Shopping list not found"}  # Retorna un mensaje de error
-    return {"message": "Shopping list deleted successfully"}  # Retorna un mensaje de éxito
+        shopping_list = ShoppingListModel.get(ShoppingListModel.id == shopping_list_id)  # Find shopping list by ID
+        shopping_list.delete_instance()  # Delete the found shopping list
+    except ShoppingListModel.DoesNotExist:  # Handle case where the shopping list does not exist
+        return {"error": "Shopping list not found"}  # Return an error message
+    return {"message": "Shopping list deleted successfully"}  # Return a success message
+

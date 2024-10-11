@@ -3,17 +3,18 @@ from pydantic import BaseModel
 
 class Menu(BaseModel):
     """
-    Modelo de menú.
+    Represents a menu.
 
-    Atributos:
-        id (int, opcional): Identificador único del menú. Por defecto, None.
-        user_id (int): Identificador del usuario que creó el menú.
-        menu_date (date): Fecha del menú.
-        meal_type (str): Tipo de comida (desayuno, almuerzo, cena, etc.).
-        create_at (datetime, opcional): Fecha y hora de creación del menú. Por defecto, None.
+    Attributes:
+        id (Optional[int]): A unique identifier for the menu. Defaults to None.
+        user_id (int): The identifier of the user who created the menu.
+        menu_date (date): The date of the menu.
+        meal_type (str): The type of meal (e.g., breakfast, lunch, dinner).
+        create_at (Optional[datetime]): The date and time when the menu was created. Defaults to None.
     """
+
     id: int = None
-    user_id : int
-    menu_date : date
-    meal_type : str
-    create_at : datetime = None
+    user_id: int
+    menu_date: date
+    meal_type: str
+    create_at: datetime = None

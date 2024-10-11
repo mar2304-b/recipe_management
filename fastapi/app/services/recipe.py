@@ -2,24 +2,22 @@ from config.database import RecipeModel
 from models.recipe import Recipe
 
 def get_all_recipes():
-    """ 
-    Obtiene todas las recetas de la base de datos.
+    """Retrieve all recipes from the database.
 
     Returns:
-        list: Lista de recetas como diccionarios.
+        list: A list of recipes as dictionaries.
     """
     recipes = RecipeModel.select().dicts()
     return list(recipes)
 
 def get_recipe_by_id(recipe_id: int):
-    """
-    Obtiene una receta específica por su ID.
+    """Retrieve a specific recipe by its ID.
 
     Args:
-        recipe_id (int): ID de la receta a obtener.
+        recipe_id (int): The ID of the recipe to retrieve.
 
     Returns:
-        Recipe or dict: La receta si se encuentra, o un diccionario de error.
+        Recipe or dict: The recipe if found, or an error dictionary.
     """
     try:
         recipe = RecipeModel.get(RecipeModel.id == recipe_id)
@@ -28,14 +26,13 @@ def get_recipe_by_id(recipe_id: int):
         return {"error": "Recipe not found"}
 
 def create_recipe(recipe: Recipe):
-    """
-    Crea una nueva receta en la base de datos.
+    """Create a new recipe in the database.
 
     Args:
-        recipe (Recipe): Objeto de receta con los detalles a crear.
+        recipe (Recipe): The recipe object with details to create.
 
     Returns:
-        Recipe: La receta creada.
+        Recipe: The created recipe object.
     """
     RecipeModel.create(
         user_id=recipe.user_id,
@@ -50,15 +47,14 @@ def create_recipe(recipe: Recipe):
     return recipe
 
 def update_recipe(recipe_id: int, recipe: Recipe):
-    """
-    Actualiza una receta existente.
+    """Update an existing recipe.
 
     Args:
-        recipe_id (int): ID de la receta a actualizar.
-        recipe (Recipe): Objeto de receta con los nuevos detalles.
+        recipe_id (int): The ID of the recipe to update.
+        recipe (Recipe): The recipe object with updated details.
 
     Returns:
-        dict: Mensaje de éxito o error.
+        dict: A message indicating success or error.
     """
     updated_rows = (
         RecipeModel.update(
@@ -81,14 +77,13 @@ def update_recipe(recipe_id: int, recipe: Recipe):
     return {"message": "Recipe updated successfully"}
 
 def delete_recipe(recipe_id: int):
-    """
-    Elimina una receta de la base de datos.
+    """Delete a recipe from the database.
 
     Args:
-        recipe_id (int): ID de la receta a eliminar.
+        recipe_id (int): The ID of the recipe to delete.
 
     Returns:
-        dict: Mensaje de éxito o error.
+        dict: A message indicating success or error.
     """
     try:
         recipe = RecipeModel.get(RecipeModel.id == recipe_id)
@@ -96,3 +91,4 @@ def delete_recipe(recipe_id: int):
     except RecipeModel.DoesNotExist:
         return {"error": "Recipe not found"}
     return {"message": "Recipe deleted successfully"}
+

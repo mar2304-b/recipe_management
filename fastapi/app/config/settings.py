@@ -1,27 +1,29 @@
-from dotenv import load_dotenv  # Importa la función para cargar variables de entorno
-import os  # Importa el módulo para interactuar con el sistema operativo
+from dotenv import load_dotenv  # Import the function to load environment variables
+import os  # Import the OS module to interact with the operating system
 
-load_dotenv()  # Carga las variables de entorno desde el archivo .env
+# Load environment variables from the .env file
+load_dotenv()
 
-# Carga el entorno (por defecto "dev").
+# Load the environment (defaults to "dev" if not specified).
 ENV = os.getenv("ENV", "dev")
 
-# Configuración de la base de datos según el entorno.
+# Database configuration based on the environment.
 if ENV == "production":
     DATABASE = {
-        "name": os.getenv("MYSQL_DATABASE"),  # Nombre de la base de datos
-        "engine": "peewee.MySQLDatabase",  # Motor de la base de datos
-        "user": os.getenv("MYSQL_USER"),  # Usuario de la base de datos
-        "password": os.getenv("MYSQL_PASSWORD"),  # Contraseña del usuario
-        "host": os.getenv("MYSQL_HOST"),  # Host de la base de datos
-        "port": int(os.getenv("MYSQL_PORT")),  # Puerto de conexión
+        "name": os.getenv("MYSQL_DATABASE"),  # Database name
+        "engine": "peewee.MySQLDatabase",  # Database engine
+        "user": os.getenv("MYSQL_USER"),  # Database user
+        "password": os.getenv("MYSQL_PASSWORD"),  # User password
+        "host": os.getenv("MYSQL_HOST"),  # Database host
+        "port": int(os.getenv("MYSQL_PORT")),  # Connection port
     }
 else:
     DATABASE = {
-        "name": os.getenv("MYSQL_DATABASE"),  # Nombre de la base de datos
-        "engine": "peewee.MySQLDatabase",  # Motor de la base de datos
-        "user": os.getenv("MYSQL_USER"),  # Usuario de la base de datos
-        "password": os.getenv("MYSQL_PASSWORD"),  # Contraseña del usuario
-        "host": os.getenv("MYSQL_HOST"),  # Host de la base de datos
-        "port": int(os.getenv("MYSQL_PORT")),  # Puerto de conexión
+        "name": os.getenv("MYSQL_DATABASE"),  # Database name
+        "engine": "peewee.MySQLDatabase",  # Database engine
+        "user": os.getenv("MYSQL_USER"),  # Database user
+        "password": os.getenv("MYSQL_PASSWORD"),  # User password
+        "host": os.getenv("MYSQL_HOST"),  # Database host
+        "port": int(os.getenv("MYSQL_PORT")),  # Connection port
     }
+

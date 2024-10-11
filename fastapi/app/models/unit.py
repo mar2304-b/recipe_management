@@ -2,11 +2,12 @@ from pydantic import BaseModel
 
 class Unit(BaseModel):
     """
-    Modelo de unidad.
+    Represents a unit of measurement.
 
-    Atributos:
-        id (int, opcional): Identificador único de la unidad. Por defecto, None.
-        name (str): Nombre de la unidad.
+    Attributes:
+        id (Optional[int]): A unique identifier for the unit. Defaults to None.
+        name (str): The name of the unit.
     """
+
     id: int = None
     name: str

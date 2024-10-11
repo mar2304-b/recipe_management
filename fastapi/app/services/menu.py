@@ -2,24 +2,22 @@ from config.database import MenuModel
 from models.menu import Menu
 
 def get_all_menus():
-    """
-    Obtiene todos los menús de la base de datos.
+    """Retrieve all menus from the database.
 
     Returns:
-        list: Lista de menús como diccionarios.
+        list: A list of menus as dictionaries.
     """
     menus = MenuModel.select().dicts()
     return list(menus)
 
 def get_menu_by_id(menu_id: int):
-    """
-    Obtiene un menú específico por su ID.
+    """Retrieve a specific menu by its ID.
 
     Args:
-        menu_id (int): ID del menú a obtener.
+        menu_id (int): The ID of the menu to retrieve.
 
     Returns:
-        Menu or dict: El menú si se encuentra, o un diccionario de error.
+        Menu or dict: The menu if found, or an error dictionary.
     """
     try:
         menu = MenuModel.get(MenuModel.id == menu_id)
@@ -28,33 +26,31 @@ def get_menu_by_id(menu_id: int):
         return {"error": "Menu not found"}
 
 def create_menu(menu: Menu):
-    """
-    Crea un nuevo menú en la base de datos.
+    """Create a new menu in the database.
 
     Args:
-        menu (Menu): Objeto de menú con los detalles a crear.
+        menu (Menu): Menu object containing details to create.
 
     Returns:
-        Menu: El menú creado.
+        Menu: The created menu object.
     """
-    MenuModel.create(
+    menu_instance = MenuModel.create(
         user_id=menu.user_id,
         menu_date=menu.menu_date,
         meal_type=menu.meal_type,
-        created_at=menu.created_at,
+        create_at=menu.create_at,
     )
-    return menu
+    return menu_instance
 
 def update_menu(menu_id: int, menu: Menu):
-    """
-    Actualiza un menú existente.
+    """Update an existing menu.
 
     Args:
-        menu_id (int): ID del menú a actualizar.
-        menu (Menu): Objeto de menú con los nuevos detalles.
+        menu_id (int): The ID of the menu to update.
+        menu (Menu): Menu object containing updated details.
 
     Returns:
-        dict: Mensaje de éxito o error.
+        dict: A message indicating success or error.
     """
     updated_rows = (
         MenuModel.update(
@@ -62,7 +58,7 @@ def update_menu(menu_id: int, menu: Menu):
                 MenuModel.user_id: menu.user_id,
                 MenuModel.menu_date: menu.menu_date,
                 MenuModel.meal_type: menu.meal_type,
-                MenuModel.created_at: menu.created_at,
+                MenuModel.create_at: menu.create_at,
             }
         )
         .where(MenuModel.id == menu_id)
@@ -74,14 +70,13 @@ def update_menu(menu_id: int, menu: Menu):
     return {"message": "Menu updated successfully"}
 
 def delete_menu(menu_id: int):
-    """
-    Elimina un menú de la base de datos.
+    """Delete a menu from the database.
 
     Args:
-        menu_id (int): ID del menú a eliminar.
+        menu_id (int): The ID of the menu to delete.
 
     Returns:
-        dict: Mensaje de éxito o error.
+        dict: A message indicating success or error.
     """
     try:
         menu = MenuModel.get(MenuModel.id == menu_id)
@@ -89,3 +84,4 @@ def delete_menu(menu_id: int):
     except MenuModel.DoesNotExist:
         return {"error": "Menu not found"}
     return {"message": "Menu deleted successfully"}
+

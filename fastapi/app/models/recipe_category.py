@@ -2,12 +2,14 @@ from pydantic import BaseModel
 
 class RecipeCategory(BaseModel):
     """
-    Modelo de categoría de receta.
+    Represents a recipe category.
 
-    Atributos:
-        id (int, opcional): Identificador único de la categoría. Por defecto, None.
-        name (str): Nombre de la categoría.
+    Attributes:
+        id (Optional[int]): A unique identifier for the category. Defaults to None.
+        name (str): The name of the category.
     """
-    id : int = None
-    name : str
+
+    id: int = None
+    name: str
+
     

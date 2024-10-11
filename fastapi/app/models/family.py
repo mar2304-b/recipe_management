@@ -2,11 +2,13 @@ from pydantic import BaseModel
 
 class Family(BaseModel):
     """
-    Modelo de familia.
+    Represents a family model.
 
-    Atributos:
-        id (int, opcional): Identificador único de la familia. Por defecto, None.
-        name (str): Nombre de la familia.
+    Attributes:
+        id (Optional[int]): A unique identifier for the family. Defaults to None.
+        name (str): The name of the family.
     """
+
     id: int = None
-    name : str
+    name: str
+

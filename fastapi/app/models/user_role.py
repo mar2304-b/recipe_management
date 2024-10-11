@@ -1,14 +1,15 @@
-from pydantic import BaseModel  
+from pydantic import BaseModel
 
 class UserRole(BaseModel):
     """
-    Modelo de roles de usuario.
+    Represents a user role.
 
-    Atributos:
-        id (int, opcional): Identificador único del rol. Por defecto, None.
-        name (str): Nombre del rol.
-        permissions (str): Permisos asociados al rol.
+    Attributes:
+        id (Optional[int]): A unique identifier for the role. Defaults to None.
+        name (str): The name of the role.
+        permissions (str): Permissions associated with the role.
     """
+
     id: int = None
     name: str
-    permissions : str
+    permissions: str

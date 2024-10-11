@@ -13,62 +13,63 @@ family_router = APIRouter()
 @family_router.get("/")
 def get_families():
     """
-    Obtiene todas las familias.
+    Retrieve all families.
 
     Returns:
-        list: Lista de familias.
+        list: A list of all families.
     """
     return get_all_families()
 
-@family_router.get("/{id}")
+@family_router.get("/{family_id}")
 def get_family(family_id: int):
     """
-    Obtiene una familia específica por su ID.
+    Retrieve a specific family by its ID.
 
     Args:
-        family_id (int): ID de la familia a obtener.
+        family_id (int): The ID of the family to retrieve.
 
     Returns:
-        FamilyModel or dict: La familia si se encuentra, o un diccionario de error.
+        Family or dict: The family if found, or an error dictionary.
     """
     return get_family_by_id(family_id)
 
 @family_router.post("/")
 def register_family(family: Family):
     """
-    Registra una nueva familia.
+    Register a new family.
 
     Args:
-        family (FamilyModel): Objeto de familia con los detalles a crear.
+        family (Family): Family object containing details for the new family.
 
     Returns:
-        FamilyModel: La familia creada.
+        Family: The created family object.
     """
     return create_family(family)
 
-@family_router.put("/{id}")
+@family_router.put("/{family_id}")
 def update_family_data(family_id: int, family: Family):
     """
-    Actualiza los datos de una familia existente.
+    Update the data of an existing family.
 
     Args:
-        family_id (int): ID de la familia a actualizar.
-        family (FamilyModel): Objeto de familia con los nuevos detalles.
+        family_id (int): The ID of the family to update.
+        family (Family): Family object containing updated details.
 
     Returns:
-        dict: Mensaje de éxito o error.
+        dict: A message indicating success or error.
     """
     return update_family(family_id, family)
 
-@family_router.delete("/{id}")
+@family_router.delete("/{family_id}")
 def remove_family(family_id: int):
     """
-    Elimina una familia de la base de datos.
+    Delete a family from the database.
 
     Args:
-        family_id (int): ID de la familia a eliminar.
+        family_id (int): The ID of the family to delete.
 
     Returns:
-        dict: Mensaje de éxito o error.
+        dict: A message indicating success or error.
     """
     return delete_family(family_id)
+
