@@ -1,3 +1,7 @@
+"""
+
+"""
+
 from config.database import RecipeCategoryModel
 from models.recipe_category import RecipeCategory
 

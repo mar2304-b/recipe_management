@@ -1,3 +1,3 @@
 [MESSAGE CONTROL]
 
-diseble=too-few-public-methods,no-self-argument,import-error,no-member
+disable=too-few-public-methods,no-self-argument,import-error,no-member
